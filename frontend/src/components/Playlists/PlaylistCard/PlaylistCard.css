@@ -1,0 +1,46 @@
+.playlist-card-container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    text-align: left;
+    cursor: pointer;
+    background: #171717;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    border-radius: 5px;
+    padding: 2.5%;
+    margin: 1%;
+    /* border: 3px solid green; */ /* After selection */
+}
+
+.playlist-card-container .playlist-cover-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.playlist-card-container .playlist-cover-container .playlist-cover {
+    width: 25svh;
+    height: 25svh;
+}
+
+.playlist-card-container .desc-container {
+    padding: 5% 0 5% 0;
+}
+
+.playlist-card-container .desc-container h3 {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    margin: 3% 0;
+    font-size: calc(5px + (16 - 8) * ((100svw - 320px) / (1200 - 320)));
+}
+
+.playlist-card-container .desc-container > span {
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: calc(5px + (16 - 10) * ((100svw - 320px) / (1200 - 320)));
+    color: #B3B3B3;
+}

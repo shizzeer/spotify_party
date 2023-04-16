@@ -1,0 +1,25 @@
+.header {
+    width: 100%;
+    height: fit-content;
+    padding: 1.5% 7.5%;
+    display: flex;
+}
+
+.header-logo-container {
+    margin-left: 0;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.header-logo-container .logo-container .logo-image {
+    width: 20svw;
+}
+
+.header-navigation-container {
+    margin-left: auto;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}

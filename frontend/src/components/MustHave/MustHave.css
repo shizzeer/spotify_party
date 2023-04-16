@@ -1,0 +1,47 @@
+.must-have-container {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.must-have-container h1 {
+    font-size: 3rem;
+    color: white;
+    text-align: center;
+}
+
+.search-bar-container {
+    padding-top: 10vh;
+    width: 40%;
+    margin: 0 auto;
+    min-width: 200px;
+}
+
+.search-results-container {
+    width: 70%;
+    padding-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    align-items: center;
+}
+
+::-webkit-scrollbar {
+    border-radius: 10px;
+    width: 10px;
+    background-color: #282828;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #b3b3b3;
+    border-radius: 10px;
+    border: 1px solid #282828;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #fff;
+    border-color: #b3b3b3;
+}
+
+

@@ -1,0 +1,12 @@
+.menu {
+    display: flex;
+    
+}
+
+a {
+    all: unset;
+}
+
+.menu > * {
+    margin: 1rem;
+}

@@ -1,0 +1,7 @@
+.Host {
+    width: 100svw;
+    height: 100svh;
+    display: flex;
+    background: #0B4721;
+    background: radial-gradient(circle farthest-corner at center center, #0B4721 0%, #000000 70%);
+}

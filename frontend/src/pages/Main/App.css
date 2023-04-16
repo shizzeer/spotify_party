@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  width: 100svw;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background: #0B4721;
+  background: radial-gradient(circle farthest-corner at center center, #0B4721 0%, #000000 70%);
+}
+
+.App-menu {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3%;
+}
+
+.App-logo {
+
+  padding: 5%;
+}
+
+.App-logo .logo-container .logo-image {
+  width: 20svw;
+}
+

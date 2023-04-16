@@ -1,0 +1,65 @@
+.session-code-container {
+    width: 25svw;
+    height: 35svh;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    color: #FFFFFF;
+    border-radius: 15px;
+    background-color: rgb(0,0,0, 0.9);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), inset 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.session-code-container h2 {
+    padding: 10% 15%;
+    font-size: calc(10px + (24 - 12) * ((100svw - 320px) / (1200 - 320)));
+}
+
+.session-code-container .session-code-input-wrapper {
+    padding: 2% 0;
+    width: 100%;
+}
+
+.session-code-container input[type="text"] {
+    width: 75%;
+    padding: 5%;
+    text-transform: uppercase;
+    border: 2px solid #1d1d1d;
+    border-radius: 5px;
+    background: #282828;
+    color: #FFFFFF;
+    text-align: center;
+    outline: none;
+    font-size: calc(4px + (16 - 8) * ((100svw - 320px) / (1200 - 320)));
+    margin-left: 0 !important;
+  }
+
+.session-code-container input::placeholder{
+    font-weight: 600;
+    color: #FFFFFF;
+    text-transform: none;
+    font-size: calc(4px + (16 - 8) * ((100svw - 320px) / (1200 - 320)));
+  }
+
+.session-code-container .session-code-enter-button {
+    width: 75%;
+    background-color: #1DB954;
+    color: #FFFFFF;
+    mix-blend-mode: normal;
+    border: 1px solid #282828;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 1%;
+    font-size: calc(8px + (22 - 14) * ((100svw - 320px) / (1200 - 320)));
+}
+
+.session-code-container .session-code-enter-button:hover {
+    background-color: #1ED760;
+    cursor: pointer;
+  }

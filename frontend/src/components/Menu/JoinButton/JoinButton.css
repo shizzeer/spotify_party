@@ -1,0 +1,28 @@
+.join-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 20svw;
+    height: 20svw;
+    background-color: rgb(255, 255, 255, 0.2);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.join-button-container .join-button-image {
+    width: 12svw;
+    height: 12svw;
+}
+
+.join-button-container .join-button-text {
+    font-size: calc(4px + (32 - 16) * ((100vw - 320px) / (1200 - 320)));
+    font-family: "Circular-Black", sans-serif;
+    padding: calc(4px + (32 - 16) * ((100vw - 320px) / (1200 - 320)));
+    color: rgb(255, 255, 255, 1);
+}
+
+.join-button-container:hover {
+    transform: scale(1.02);
+    background-color: rgb(255, 255, 255, 0.4);
+}

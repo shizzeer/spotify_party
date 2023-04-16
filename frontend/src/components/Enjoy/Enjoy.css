@@ -1,0 +1,17 @@
+.enjoy-container {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10%;
+    width: 100%;
+    height: 100%;
+}
+.enjoy-container h1 {
+    padding: 5svh;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: calc(10px + (32 - 12) * ((100svw - 320px) / (1200 - 320)));
+}

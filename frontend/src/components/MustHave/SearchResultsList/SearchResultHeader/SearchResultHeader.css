@@ -1,0 +1,39 @@
+.table-header, .table-header #clock-icon {
+    color: rgb(179,179,179, 0.9);
+}
+.table-header {
+    width: 100%;
+    border-bottom: 1px solid rgb(179,179,179, 0.9);
+}
+.table-header th {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+/* # */
+.table-header th:first-child {
+    padding-left: 2rem;
+    margin-left: 0;
+}
+
+/* TITLE */
+.table-header th:nth-child(2) {
+    width: 60%;
+}
+
+/* ALBUM */
+.table-header th:nth-child(3) {
+    width: 50%;
+    margin: 0 auto;
+}
+
+/* CLOCK-ICON */
+.table-header th:last-child {
+    padding-right: 2rem;
+    margin-right: 0;
+}
+
+.table-header th:first-child, .table-header th:last-child {
+    font-size: 1.2rem;
+}

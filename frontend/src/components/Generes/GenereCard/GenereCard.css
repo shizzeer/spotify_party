@@ -1,0 +1,34 @@
+.genere-card-container {
+    background: #223161; /* Default color in case of not passing color */
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    border-radius: 12px;
+    width: 15svw;
+    height: 15svw;
+    margin: 1svw;
+    /* border: 3px solid green; */ /* After selection */
+}
+
+.genere-card-container h3 {
+    padding: 5%;
+    font-size: calc(6px + (32 - 16) * ((100svw - 320px) / (1200 - 320)));
+    text-align: left;
+}
+
+.genere-card-container .genere-card-image-container {
+}
+
+.genere-card-container .genere-card-image-container .genere-image {
+    width: 65%;
+    height: 65%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-radius: 0 0 12px 0;
+}
+
+
