@@ -1,24 +1,18 @@
-"""
-URL configuration for config project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 from spotify_party import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index')
+    path('api/auth/join', views.AuthUserURL.as_view()),
+    #path('api/auth/host', views.AuthHostURL.as_view()),
+    path('api/auth/join/callback', views.spotify_user_callback),
+    #path('api/auth/host/callback', views.spotify_host_callback),
+    path('api/auth/check', views.IsAuthenticated.as_view()),
+    path('api/me/playlists', views.Playlists.as_view()),
+    path('api/me/artists', views.Artists.as_view()),
+    path('api/me/genres', views.Genres.as_view()),
+    path('api/me/albums', views.Albums.as_view()),
+    path('api/me/tracks', views.Tracks.as_view()),
+    #path('api/me/compute', views.Compute.as_view()), FOR TESTING
 ]
