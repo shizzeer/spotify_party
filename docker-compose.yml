@@ -1,21 +1,15 @@
 version: '3'
 
 services:
-  # backend:
-  #   build:
-  #     context: .
-  #     dockerfile: docker/spring/Dockerfile
-  #   container_name: spotify_party_django
-  #   ports:
-  #     - "8000:8080"
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
-  #   environment:
-  #     SPRING_DATASOURCE_URL: jdbc:postgresql://linetime_db:5432/devdb
-  #     SPRING_DATASOURCE_USERNAME: devuser
-  #     SPRING_DATASOURCE_PASSWORD: devsecret
-  #     SPRING_JPA_HIBERNATE_DDL_AUTO: update
+  backend:
+    build:
+      context: .
+      dockerfile: docker/django/Dockerfile
+    container_name: spotify_party_django
+    ports:
+      - '8000:8000'
+    depends_on:
+      - sqlite3
 
   frontend:
     build:
@@ -23,30 +17,20 @@ services:
       dockerfile: docker/react/Dockerfile
     container_name: spotify_party_react
     ports:
-      - "3000:80"
-    # depends_on:
-    #   - backend
+      - '3000:80'
+    depends_on:
+      - backend
 
-  # db:
-  #   build:
-  #     context: .
-  #     dockerfile: docker/sqlite3/Dockerfile
-  #   container_name: spotify_party_db
-  #   ports:
-  #     - "54320:5432"
-  #   restart: always
-  #   environment:
-  #     POSTGRES_PASSWORD: devsecret #those have to match ones specified in config.php
-  #     POSTGRES_USER: devuser
-  #     POSTGRES_DB: devdb
-  #   volumes:
-  #     - db_data:/var/lib/postgres/data
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "pg_isready -U devuser -d devdb"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
+  sqlite3:
+    container_name: spotify_party_sqlite3
+    image: nouchka/sqlite3:latest
+    stdin_open: true
+    tty: true
+    ports:
+      - '9000:9000' 
+    volumes:
+      - spotify_party_db_data:/root/db/
+    restart: unless-stopped
 
-
-# volumes:
-#   db_data:
+volumes:
+  spotify_party_db_data:
