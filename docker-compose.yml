@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/django/Dockerfile
+    container_name: spotify_party_django
+    ports:
+      - '8000:8000'
+    depends_on:
+      - sqlite3
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/react/Dockerfile
+    container_name: spotify_party_react
+    ports:
+      - '3000:80'
+    depends_on:
+      - backend
+
+  sqlite3:
+    container_name: spotify_party_sqlite3
+    image: nouchka/sqlite3:latest
+    stdin_open: true
+    tty: true
+    ports:
+      - '9000:9000' 
+    volumes:
+      - spotify_party_db_data:/root/db/
+    restart: unless-stopped
+
+volumes:
+  spotify_party_db_data:
