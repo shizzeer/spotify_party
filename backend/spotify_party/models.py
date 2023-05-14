@@ -77,3 +77,14 @@ class Album(models.Model):
 class AlbumTrack(models.Model):
     id_album = models.ForeignKey(Album, on_delete=models.CASCADE)
     id_track = models.ForeignKey(Track, on_delete=models.CASCADE)
+
+class Room(models.Model):
+    code = models.CharField(primary_key=True, max_length=6)
+    host = models.ForeignKey(User, on_delete=models.CASCADE, related_name="hosted_rooms")
+    users = models.ManyToManyField('User', through='RoomParticipant', related_name="joined_rooms")
+
+class RoomParticipant(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    joined_at = models.DateTimeField(auto_now_add=True)
+

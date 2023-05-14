@@ -414,6 +414,7 @@ def get_user_track_ids(user_id):
     # Concatenate all track querysets and remove duplicates
     track_ids = set(list(playlist_tracks) + list(album_tracks) + list(artist_tracks))
     return list(track_ids)
+
 # def get_favorite_genres(session_id):
 #     """
 #     Retrieves the user's favorite genres based on available genre seeds from the Spotify API.

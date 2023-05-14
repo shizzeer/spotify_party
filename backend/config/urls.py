@@ -6,7 +6,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/auth/join', views.AuthUserURL.as_view()),
     # path('api/auth/host', views.AuthHostURL.as_view()),
-    #path('api/room', views.Room.as_view()),
     #path('api/room/<str:room_code>/', views.Room.as_view()),
     path('api/auth/join/callback', views.spotify_user_callback),
     # path('api/auth/host/callback', views.spotify_host_callback),
@@ -16,5 +15,6 @@ urlpatterns = [
     #path('api/me/genres', views.Genres.as_view()),
     path('api/me/albums', views.SavedAlbums.as_view()),
     #path('api/me/tracks', views.Tracks.as_view()),
+    path('api/room', views.RoomView.as_view()),
     path('api/me/test', views.Test.as_view()), #FOR TESTING
 ]
