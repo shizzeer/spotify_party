@@ -8,6 +8,8 @@ services:
     container_name: spotify_party_django
     ports:
       - '8000:8000'
+    volumes:
+      - ./backend/db.sqlite3:/usr/src/app/db.sqlite3
     depends_on:
       - sqlite3
 
@@ -29,7 +31,7 @@ services:
     ports:
       - '9000:9000' 
     volumes:
-      - spotify_party_db_data:/root/db/
+      - ./backend/db.sqlite3:/root/db/db.sqlite3
     restart: unless-stopped
 
 volumes:

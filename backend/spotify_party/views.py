@@ -1,11 +1,16 @@
+import random
+import string
 from django.shortcuts import redirect
+
+from .models import Room, RoomParticipant
 from .credentials import CLIENT_SECRET, CLIENT_ID, USER_SCOPES, REDIRECT_CALLBACK_JOIN_URI
 from rest_framework.views import APIView
 from requests import Request, post
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.decorators import action 
 
-from .util import *
+from .util import * 
 
 
 class AuthUserURL(APIView):
@@ -177,7 +182,50 @@ class SavedAlbums(APIView):
             {"message": "Selected albums have been added to favourites."},
             status=status.HTTP_200_OK,
         )
+    
+class RoomView(APIView):
+    """
+    A class-based view to create and join rooms based on session code.
+    """
 
+    def create(self, request):
+        user_id = request.data.get('user_id')  # Pobierz id_user z ciała żądania
+        user = User.objects.get(id_user=user_id)
+        # Generate unique code for a room
+        code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+        room = Room.objects.create(host=user, code=code)
+        room.save()
+
+        # Add host user as a first room participant
+        roomParticipant = RoomParticipant.objects.create(user=user, room=room)
+        roomParticipant.save()
+
+        return Response({'room_code': code})
+
+    def join(self, request):
+        room_code = request.data.get('room_code')
+        user_id = request.data.get('user_id')
+        user = User.objects.get(id_user=user_id)
+        try:
+            room = Room.objects.get(code=room_code)
+            try:
+                room_participant = RoomParticipant.objects.get(room_id=room_code, user_id=user_id)
+                return Response({'error': 'User already joined this room'})
+            except RoomParticipant.DoesNotExist:
+                RoomParticipant.objects.create(user=user, room=room)
+                return Response({'room_code': room_code})
+        except Room.DoesNotExist:
+            return Response({'error': 'Room not found'}, status=404)
+
+    def post(self, request):
+        action = request.data.get('action')
+        if action == 'create':
+            return self.create(request)
+        elif action == 'join':
+            return self.join(request)
+        else:
+            return Response({'error': 'Invalid action'}, status=400)
+    
 
 class Test(APIView):
     def get(self, request):
