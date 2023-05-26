@@ -7,7 +7,9 @@ import Generes from "../../components/Generes/Generes";
 import {Route, Routes} from "react-router-dom";
 import Playlists from "../../components/Playlists/Playlists";
 import Enjoy from "../../components/Enjoy/Enjoy";
+import Albums from "../../components/Albums/Albums";
 export default function Join() {
+
     return (
         <div className="Join">
             <Header />
@@ -16,6 +18,7 @@ export default function Join() {
               <Routes>
                   <Route path="/" element={<SessionPopup />} />
                   <Route path="/playlists" element={<Playlists />} />
+                  <Route path="/albums" element={<Albums />} />
                   <Route path="/artists" element={<Artists />} />
                   <Route path="/generes" element={<Generes />} />
                   <Route path="/must-have" element={<MustHave />} />

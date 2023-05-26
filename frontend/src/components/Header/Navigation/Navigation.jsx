@@ -5,7 +5,7 @@ import {FaChevronRight, FaChevronLeft} from "react-icons/fa";
 
 const Navigation: React.FC = () => {
     {/*Temporary routing for 17.04.2023 */}
-    const pages = ["/join/", "/join/generes", "/join/artists", "/join/generes", "/join/must-have", "/join/enjoy"];
+    const pages = ["/join/", "/join/playlists", "/join/albums", "/join/generes", "/join/artists", "/join/must-have", "/join/enjoy"];
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
     const goBack = () => {

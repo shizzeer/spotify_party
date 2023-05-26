@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './ArtistCard.css';
 
-export default function ArtistCard({img, title, description}) {
+export default function ArtistCard({img, artistName, description}) {
     const [clicked, setClicked] = useState(false);
 
     const handleClick = () => {
@@ -20,8 +20,7 @@ export default function ArtistCard({img, title, description}) {
                 <img className="circular-avatar" src={img} alt="Avatar"/>
             </div>
             <div className="desc-container">
-                <h3>{title}</h3>
-                <span>{description}</span>
+                <h3>{artistName}</h3>
             </div>
         </div>
     )

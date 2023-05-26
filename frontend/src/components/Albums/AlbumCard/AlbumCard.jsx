@@ -1,7 +1,7 @@
-import { useState} from 'react';
-import './PlaylistCard.css';
+import { useState } from 'react';
+import './AlbumCard.css';
 
-export default function PlaylistCard({img, playlistName, description, onCheckedChange}) {
+export default function AlbumCard({img, albumName, artistName, onCheckedChange}) {
     const [checked, setChecked] = useState(false);
 
     const handleClick = () => {
@@ -17,13 +17,13 @@ export default function PlaylistCard({img, playlistName, description, onCheckedC
     };
 
     return (
-        <div style={checkedStyle} className="playlist-card-container" onClick={handleClick}>
-            <div className="playlist-cover-container">
-                <img className="playlist-cover" src={img} alt="Playlist Cover"/>
+        <div style={checkedStyle} className="album-card-container" onClick={handleClick}>
+            <div className="album-cover-container">
+                <img className="album-cover" src={img} alt="Album Cover"/>
             </div>
             <div className="desc-container">
-                <h3>{playlistName}</h3>
-                <span>{description}</span>
+                <h3>{albumName}</h3>
+                <span>{artistName}</span>
             </div>
         </div>
     )

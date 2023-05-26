@@ -52,13 +52,13 @@ def spotify_user_callback(request):
     :return: A redirect to the specified URL.
     """
 
-    REDIRECT_URL = 'http://localhost:3000/join'
+    REDIRECT_URL = 'http://127.0.0.1:3000/join'
 
     # Get the authorization code from the request's GET parameters
     code = request.GET.get('code')
 
     # Send a POST request to exchange the authorization code for an access token
-    response = post('https://accounts.spotify.com/api/token', data={
+    spotify_response = post('https://accounts.spotify.com/api/token', data={
         'grant_type': 'authorization_code',
         'code': code,
         'redirect_uri': REDIRECT_CALLBACK_JOIN_URI,
@@ -66,18 +66,20 @@ def spotify_user_callback(request):
         'client_secret': CLIENT_SECRET
     }).json()
 
-    access_token = response.get('access_token')
-    token_type = response.get('token_type')
-    refresh_token = response.get('refresh_token')
-    expires_in = response.get('expires_in')
+    access_token = spotify_response.get('access_token')
+    token_type = spotify_response.get('token_type')
+    refresh_token = spotify_response.get('refresh_token')
+    expires_in = spotify_response.get('expires_in')
 
     if not request.session.exists(request.session.session_key):
         request.session.create()
 
     set_tokens(request.session.session_key, access_token, token_type, expires_in, refresh_token)
 
-    # TODO: CHANGE URL (FOR TESTING PURPOSES ONLY)
-    return redirect('http://127.0.0.1:8000/api/auth/check')
+    #TODO: NOT SAFE FOR PRODUCTION
+    response = redirect(REDIRECT_URL)
+    response.set_cookie('sessionid', request.session.session_key, path='/join')
+    return response
 
 
 class IsAuthenticated(APIView):
@@ -204,7 +206,7 @@ class RoomView(APIView):
 
     def join(self, request):
         room_code = request.data.get('room_code')
-        user_id = request.data.get('user_id')
+        user_id = self.request.session.session_key
         user = User.objects.get(id_user=user_id)
         try:
             room = Room.objects.get(code=room_code)

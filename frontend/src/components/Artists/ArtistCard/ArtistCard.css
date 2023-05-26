@@ -27,21 +27,14 @@
 }
 
 .artist-card-container .desc-container {
-    padding: 5% 0 10% 0;
+    padding: 10% 0 10% 0;
 }
 
 .artist-card-container .desc-container h3 {
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 700;
-    margin: 3% 0;
+    margin: 5% 0;
     font-size: calc(5px + (16 - 8) * ((100svw - 320px) / (1200 - 320)));
-}
-
-.artist-card-container .desc-container > span {
-    font-family: 'Poppins', sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: calc(5px + (16 - 8) * ((100svw - 320px) / (1200 - 320)));
-    color: #B3B3B3;
+    text-align: center;
 }
