@@ -2,8 +2,10 @@ import './Artists.css';
 import ArtistsList from "./ArtistsList/ArtistsList";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 export default function Artists() {
     const [artists, setArtists] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchArtists = async () => {
@@ -18,6 +20,10 @@ export default function Artists() {
         fetchArtists();
     }, []);
 
+    const handleSubmitArtists = async () => {
+        navigate("/join/must-have");
+    };
+
     return (
         <>
             <div className="artists-container">
@@ -25,6 +31,7 @@ export default function Artists() {
                 <div className="artists-list-container">
                     <ArtistsList artists={artists} />
                 </div>
+                <button onClick={handleSubmitArtists}>Submit</button>
             </div>
         </>
     );

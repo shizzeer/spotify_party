@@ -16,10 +16,11 @@
     width: 20svw;
 }
 
-.header-navigation-container {
+.header-code-container {
     margin-left: auto;
     display: flex;
     text-align: center;
     align-items: center;
     justify-content: center;
+    color: white;
 }

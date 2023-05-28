@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { RoomContext } from '../../context/RoomContext';
 import "./SessionPopup.css";
 
 export default function SessionPopup() {
     const [sessionCode, setSessionCode] = useState('');
+    const {setRoomCode } = useContext(RoomContext);
     const navigate = useNavigate();
     const handleInputChange = (event) => {
         setSessionCode(event.target.value);
@@ -16,6 +18,7 @@ export default function SessionPopup() {
             console.log(response.data);
 
             if (response.status === 200) {
+                setRoomCode(sessionCode);
                 navigate("/join/playlists");
             }
         } catch (error) {

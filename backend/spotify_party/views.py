@@ -3,7 +3,7 @@ import string
 from django.shortcuts import redirect
 
 from .models import Room, RoomParticipant
-from .credentials import CLIENT_SECRET, CLIENT_ID, USER_SCOPES, REDIRECT_CALLBACK_JOIN_URI
+from .credentials import CLIENT_SECRET, CLIENT_ID, USER_SCOPES, HOST_SCOPES, REDIRECT_CALLBACK_JOIN_URI, REDIRECT_CALLBACK_HOST_URI
 from rest_framework.views import APIView
 from requests import Request, post
 from rest_framework import status
@@ -40,6 +40,75 @@ class AuthUserURL(APIView):
         ).prepare().url
 
         return Response({'url': url}, status=status.HTTP_200_OK)
+
+
+class AuthHostURL(APIView):
+    """ Handles the authorization process for users-hosts with Spotify API. """
+
+    def get(self, request):
+        """
+        Handles GET requests and returns a URL for user authorization.
+
+        :param request: An HttpRequest object representing the request.
+        :return: A JsonResponse containing the authorization URL and an HTTP 200 status code.
+        """
+
+        # Join hosts scopes (permissions) into a single space-separated string
+        scopes = ' '.join(HOST_SCOPES)
+
+        # Construct the authorization URL
+        url = Request(
+            method='GET',
+            url='https://accounts.spotify.com/authorize',
+            params={
+                'scope': scopes,
+                'response_type': 'code',
+                'redirect_uri': REDIRECT_CALLBACK_HOST_URI,
+                'client_id': CLIENT_ID,
+            }
+        ).prepare().url
+
+        return Response({'url': url}, status=status.HTTP_200_OK)
+
+
+def spotify_host_callback(request):
+    """
+    Handles the callback from the Spotify API after user-host authorization.
+    It retrieves the authorization code, exchanges it for an access token, and stores the
+    tokens in the database for the current session.
+
+    :param request: An HttpRequest object representing the request.
+    :return: A redirect to the specified URL.
+    """
+
+    REDIRECT_URL = 'http://127.0.0.1:3000/host'
+
+    # Get the authorization code from the request's GET parameters
+    code = request.GET.get('code')
+
+    # Send a POST request to exchange the authorization code for an access token
+    spotify_response = post('https://accounts.spotify.com/api/token', data={
+        'grant_type': 'authorization_code',
+        'code': code,
+        'redirect_uri': REDIRECT_CALLBACK_HOST_URI,
+        'client_id': CLIENT_ID,
+        'client_secret': CLIENT_SECRET
+    }).json()
+
+    access_token = spotify_response.get('access_token')
+    token_type = spotify_response.get('token_type')
+    refresh_token = spotify_response.get('refresh_token')
+    expires_in = spotify_response.get('expires_in')
+
+    if not request.session.exists(request.session.session_key):
+        request.session.create()
+
+    set_tokens(request.session.session_key, access_token, token_type, expires_in, refresh_token)
+
+    #TODO: NOT SAFE FOR PRODUCTION
+    response = redirect(REDIRECT_URL)
+    response.set_cookie('sessionid', request.session.session_key, path='/host')
+    return response
 
 
 def spotify_user_callback(request):

@@ -1,19 +1,18 @@
 import React from "react";
 import "./Header.css";
 import SpotifyPartyLogo from "../SpotifyPartyLogo/SpotifyPartyLogo";
-import Navigation from "./Navigation/Navigation";
 
-const Header = () => {
-  return (
+const Header = ({ roomCode }) => {
+    return (
         <header className="header">
             <div className="header-logo-container">
                 <SpotifyPartyLogo />
             </div>
-            <div className="header-navigation-container">
-                <Navigation />
+            <div className="header-code-container">
+                {roomCode && <h2 className="header-code">Room: {roomCode}</h2>}
             </div>
         </header>
-  );
+    );
 };
 
 export default Header;
