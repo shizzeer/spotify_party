@@ -236,6 +236,30 @@ def get_saved_albums(session_id):
     return albums
 
 
+def get_tracks(session_id, query):
+    """
+    Searches for tracks in Spotify.
+
+    :param session_id: The user's session ID.
+    :param query: The search query.
+    :return: A list of dictionaries containing the tracks' names, artists, album covers, and IDs, or an error dictionary.
+    """
+    tracks = execute_spotify_api_request(session_id, f"search?q={query}&type=track&limit=5")
+    if "Error" in tracks:
+        return tracks
+
+    return [
+        {
+            "name": track["name"],
+            "artist": track["artists"][0]["name"],
+            "image": track["album"]["images"][2]["url"] if len(track["album"]["images"]) > 0 else None,
+            "id": track["id"],
+            "duration": f"{track['duration_ms'] // 60000}:{(track['duration_ms'] % 60000) // 1000:02d}",
+            "album": track["album"]["name"] if "album" in track and "name" in track["album"] else None,
+        } for track in tracks["tracks"]["items"]
+    ]
+
+
 def save_playlists_to_db(user, selected_playlists):
     try:
         for playlist in selected_playlists:

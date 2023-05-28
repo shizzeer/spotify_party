@@ -260,7 +260,7 @@ class RoomView(APIView):
     """
 
     def create(self, request):
-        user_id = request.data.get('user_id')  # Pobierz id_user z ciała żądania
+        user_id = self.request.session.session_key
         user = User.objects.get(id_user=user_id)
         # Generate unique code for a room
         code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
@@ -296,6 +296,25 @@ class RoomView(APIView):
             return self.join(request)
         else:
             return Response({'error': 'Invalid action'}, status=400)
+
+
+class SearchTracks(APIView):
+    """
+    A class-based view to search tracks in Spotify.
+    """
+
+    def get(self, request):
+        session_id = self.request.session.session_key
+        query = request.GET.get('q')
+
+        if query is None:
+            return Response({'Error': 'Missing query parameter'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Get the tracks from Spotify
+        tracks = get_tracks(session_id, query)
+
+        # Return the retrieved tracks with a 200 OK status
+        return Response(tracks, status=status.HTTP_200_OK)
     
 
 class Test(APIView):
@@ -307,6 +326,9 @@ class Test(APIView):
 
         # Return the retrieved tracks with a 200 OK status
         return Response(user_tracks, status=status.HTTP_200_OK)
+
+
+
 
 #
 # class Genres(APIView):

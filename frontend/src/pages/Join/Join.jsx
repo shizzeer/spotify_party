@@ -1,5 +1,5 @@
 import './Join.css'
-import { RoomContext } from '../../context/RoomContext';
+import React, {useContext} from 'react';
 import Header from "../../components/Header/Header";
 import MustHave from "../../components/MustHave/MustHave";
 import SessionPopup from "../../components/SessionPopup/SessionPopup";
@@ -9,15 +9,13 @@ import {Route, Routes} from "react-router-dom";
 import Playlists from "../../components/Playlists/Playlists";
 import Enjoy from "../../components/Enjoy/Enjoy";
 import Albums from "../../components/Albums/Albums";
-import {useState} from "react";
+import {RoomProvider} from '../../context/RoomContext';
+
 export default function Join() {
-    const [roomCode, setRoomCode] = useState(null);
-
     return (
-
         <div className="Join">
-            <RoomContext.Provider value={{ roomCode, setRoomCode }}>
-                <Header roomCode={roomCode}/>
+            <RoomProvider>
+                <Header/>
                   <div className="content">
                       <Routes>
                           <Route path="/" element={<SessionPopup />} />
@@ -29,7 +27,7 @@ export default function Join() {
                           <Route path="/enjoy" element={<Enjoy />} />
                       </Routes>
                   </div>
-            </RoomContext.Provider>
+            </RoomProvider>
         </div>
     );
 }

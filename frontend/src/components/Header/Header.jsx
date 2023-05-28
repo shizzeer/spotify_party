@@ -1,8 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
 import "./Header.css";
 import SpotifyPartyLogo from "../SpotifyPartyLogo/SpotifyPartyLogo";
+import {RoomContext} from '../../context/RoomContext';
 
-const Header = ({ roomCode }) => {
+const Header = () => {
+    const { roomCode } = useContext(RoomContext);
+
     return (
         <header className="header">
             <div className="header-logo-container">

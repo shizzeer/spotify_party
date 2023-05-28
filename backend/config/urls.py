@@ -14,6 +14,7 @@ urlpatterns = [
     path('api/me/artists', views.TopArtists.as_view()),
     #path('api/me/genres', views.Genres.as_view()),
     path('api/me/albums', views.SavedAlbums.as_view()),
+    path('api/me/must-have', views.SearchTracks.as_view()),
     #path('api/me/tracks', views.Tracks.as_view()),
     path('api/room', views.RoomView.as_view()),
     path('api/me/test', views.Test.as_view()), #FOR TESTING
