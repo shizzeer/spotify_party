@@ -1,33 +1,25 @@
 .artist-card-container {
     display: flex;
     flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    text-align: left;
+    align-items: center;
     cursor: pointer;
     background: #171717;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     color: #FFFFFF;
     border-radius: 5px;
-    padding: 2.5%;
-    margin: 1%;
+    padding: 12.5%;
+    margin: 4%;
     /* border: 3px solid green; */ /* After selection */
 }
 
-.artist-card-container .circular-avatar-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.artist-card-container .circular-avatar-container .circular-avatar {
-    width: 25svh;
-    height: 25svh;
+.artist-card-container .circular-avatar {
+    width: 10svw;
+    height: 10svw;
     border-radius: 50%;
 }
 
 .artist-card-container .desc-container {
-    padding: 10% 0 10% 0;
+    padding: 15% 0;
 }
 
 .artist-card-container .desc-container h3 {

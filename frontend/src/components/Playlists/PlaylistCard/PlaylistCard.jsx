@@ -18,9 +18,7 @@ export default function PlaylistCard({img, playlistName, description, onCheckedC
 
     return (
         <div style={checkedStyle} className="playlist-card-container" onClick={handleClick}>
-            <div className="playlist-cover-container">
-                <img className="playlist-cover" src={img} alt="Playlist Cover"/>
-            </div>
+            <img className="playlist-cover" src={img} alt="Playlist Cover"/>
             <div className="desc-container">
                 <h3>{playlistName}</h3>
                 <span>{description}</span>

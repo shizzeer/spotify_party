@@ -1,6 +1,11 @@
 import './ArtistsList.css';
 import React, { useState, useEffect } from 'react';
 import ArtistCard from '../ArtistCard/ArtistCard';
+import NextArrow from "../../Arrows/NextArrow/NextArrow";
+import PrevArrow from "../../Arrows/PrevArrow/PrevArrow";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function ArtistsList({artists, setSelectedArtists}) {
     const [checkedArtists, setCheckedArtists] = useState([]);
@@ -21,18 +26,35 @@ export default function ArtistsList({artists, setSelectedArtists}) {
         setSelectedArtists(checkedArtists);
     }, [checkedArtists, setSelectedArtists]);
 
+    const settings = {
+        dots: false,
+        infinite: artists.length >= 5,
+        speed: 500,
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
+        lazyLoad: true
+    };
+
     return (
         <>
-            <div className="artists-list-container">
-                {artists.map((artist, index) => (
-                    <ArtistCard
-                        key={artist.id}
-                        artistName={artist.name}
-                        img={artist.image}
-                        onCheckedChange={(isChecked) => handleCheckedChange(index, isChecked)}
-                    />
-                ))}
-            </div>
+            {artists ? (
+                <Slider {...settings}>
+                    {artists.map((artist, index) => {
+                        return (
+                            <ArtistCard
+                                key={artist.id}
+                                img={artist.image}
+                                artistName={artist.name}
+                                onCheckedChange={(isChecked) => handleCheckedChange(index, isChecked)}
+                            />
+                        );
+                    })}
+                </Slider>
+            ) : (
+                <p>Loading...</p>
+            )}
         </>
     );
 }

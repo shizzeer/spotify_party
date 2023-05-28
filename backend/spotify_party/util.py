@@ -227,10 +227,11 @@ def get_saved_albums(session_id):
     for album in saved_albums["items"]:
         album_info = album["album"]
         album_dict = {
-            "name": album_info["name"],
-            "image": album_info["images"][0]["url"] if album_info["images"] else None,
-            "id": album_info["id"]
-        }
+                    "name": album_info["name"],
+                    "artist": album_info["artists"][0]["name"],
+                    "image": album_info["images"][0]["url"] if album_info["images"] else None,
+                    "id": album_info["id"]
+                }
 
         albums.append(album_dict)
     return albums

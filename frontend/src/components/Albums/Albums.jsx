@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AlbumsList from "./AlbumsList/AlbumsList";
 import {useNavigate} from "react-router-dom";
+import NextButton from "../NextButon/NextButton";
 
 export default function Albums() {
     const [albums, setAlbums] = useState([]);
@@ -23,7 +24,7 @@ export default function Albums() {
     }, []);
 
     const handleSubmitAlbums = async () => {
-        navigate("/join/generes");
+        navigate("/join/artists");
         try {
             await axios.post('http://127.0.0.1:8000/api/me/albums', { selected_albums: selectedAlbums }, { withCredentials: true });
             console.log('Albums submitted successfully!');
@@ -42,7 +43,7 @@ export default function Albums() {
                         setSelectedAlbums={setSelectedAlbums}
                     />
                 </div>
-                <button onClick={handleSubmitAlbums}>Submit</button>
+                <NextButton onClick={handleSubmitAlbums} />
             </div>
         </>
     );

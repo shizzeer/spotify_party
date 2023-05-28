@@ -3,6 +3,7 @@ import ArtistsList from "./ArtistsList/ArtistsList";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
+import NextButton from "../NextButon/NextButton";
 export default function Artists() {
     const [artists, setArtists] = useState([]);
     const [selectedArtists, setSelectedArtists] = useState([]);
@@ -22,7 +23,7 @@ export default function Artists() {
     }, []);
 
     const handleSubmitArtists = async () => {
-        navigate("/join/albums");
+        navigate("/join/generes");
         try {
             await axios.post('http://127.0.0.1:8000/api/me/artists', { selected_artists: selectedArtists }, { withCredentials: true });
             console.log('Artists submitted successfully!');
@@ -41,7 +42,7 @@ export default function Artists() {
                         setSelectedArtists={setSelectedArtists}
                     />
                 </div>
-                <button onClick={handleSubmitArtists}>Submit</button>
+                <NextButton onClick={handleSubmitArtists} />
             </div>
         </>
     );

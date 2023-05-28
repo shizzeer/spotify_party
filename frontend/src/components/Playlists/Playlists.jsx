@@ -3,6 +3,7 @@ import PlaylistsList from "./PlaylistsList/PlaylistsList";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
+import NextButton from "../NextButon/NextButton";
 
 export default function Playlists() {
     const [playlists, setPlaylists] = useState([]);
@@ -42,7 +43,7 @@ export default function Playlists() {
                         setSelectedPlaylists={setSelectedPlaylists}
                     />
                 </div>
-                <button onClick={handleSubmitPlaylists}>Submit</button>
+                <NextButton onClick={handleSubmitPlaylists} />
             </div>
         </>
     );

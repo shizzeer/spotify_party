@@ -2,8 +2,13 @@
     width: 100%;
     height: 100%;
 }
+
+.playlists-container .playlists-list-container {
+    width: 75%;
+    margin: auto;
+}
 .playlists-container h1 {
-    padding: 4svh;
+    padding: 5svh;
     color: #FFFFFF;
     font-family: 'Roboto', sans-serif;
     font-style: normal;

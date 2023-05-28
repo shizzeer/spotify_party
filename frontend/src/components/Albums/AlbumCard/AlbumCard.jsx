@@ -18,11 +18,9 @@ export default function AlbumCard({img, albumName, artistName, onCheckedChange})
 
     return (
         <div style={checkedStyle} className="album-card-container" onClick={handleClick}>
-            <div className="album-cover-container">
-                <img className="album-cover" src={img} alt="Album Cover"/>
-            </div>
+            <img className="album-cover" src={img} alt="Album Cover"/>
             <div className="desc-container">
-                <h3>{albumName}</h3>
+                <h3 className={'album-name'}>{albumName}</h3>
                 <span>{artistName}</span>
             </div>
         </div>

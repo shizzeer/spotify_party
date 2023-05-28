@@ -1,0 +1,7 @@
+.slick-next:before {
+    font-size: 3svw !important;
+}
+
+.slick-next {
+    right: -3.5svw !important;
+}

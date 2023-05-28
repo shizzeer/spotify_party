@@ -1,0 +1,7 @@
+.slick-prev:before {
+    font-size: 3svw !important;
+}
+
+.slick-prev {
+    left: -5svw !important;
+}

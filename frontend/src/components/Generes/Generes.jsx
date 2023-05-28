@@ -3,11 +3,12 @@ import GeneresList from "./GeneresList/GeneresList";
 import React from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import NextButton from "../NextButon/NextButton";
 
 export default function Generes() {
     const navigate = useNavigate();
     const handleSubmitGenres = async () => {
-        navigate("/join/artists");
+        navigate("/join/enjoy");
     };
 
     return (
@@ -17,7 +18,7 @@ export default function Generes() {
                 <div className="generes-list-container">
                     <GeneresList />
                 </div>
-                <button onClick={handleSubmitGenres}>Submit</button>
+                <NextButton onClick={handleSubmitGenres} />
             </div>
         </>
     );

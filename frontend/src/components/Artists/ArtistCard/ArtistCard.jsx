@@ -18,11 +18,9 @@ export default function ArtistCard({img, artistName, onCheckedChange}) {
 
     return (
         <div style={checkedStyle} className="artist-card-container" onClick={handleClick}>
-            <div className="circular-avatar-container">
-                <img className="circular-avatar" src={img} alt="Avatar"/>
-            </div>
+            <img className="circular-avatar" src={img} alt="Avatar"/>
             <div className="desc-container">
-                <h3>{artistName}</h3>
+                <h3 className="artists-name">{artistName}</h3>
             </div>
         </div>
     )
