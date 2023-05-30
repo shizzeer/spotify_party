@@ -8,7 +8,7 @@ import NextButton from "../NextButon/NextButton";
 export default function Generes() {
     const navigate = useNavigate();
     const handleSubmitGenres = async () => {
-        navigate("/join/enjoy");
+        navigate("/join/must-have");
     };
 
     return (

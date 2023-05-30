@@ -2,6 +2,21 @@
     width: 100svw;
     height: 100svh;
     display: flex;
+    flex-direction: column;
     background: #0B4721;
     background: radial-gradient(circle farthest-corner at center center, #0B4721 0%, #000000 70%);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.Host h1 {
+    color: white;
+    padding: 2svh 0;
+    font-size: 3svw;
+}
+
+.Host h2 {
+    color: white;
+    font-size: 2svw;
 }

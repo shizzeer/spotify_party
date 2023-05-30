@@ -9,12 +9,10 @@ import {Route, Routes} from "react-router-dom";
 import Playlists from "../../components/Playlists/Playlists";
 import Enjoy from "../../components/Enjoy/Enjoy";
 import Albums from "../../components/Albums/Albums";
-import {RoomProvider} from '../../context/RoomContext';
 
 export default function Join() {
     return (
         <div className="Join">
-            <RoomProvider>
                 <Header/>
                   <div className="content">
                       <Routes>
@@ -27,7 +25,6 @@ export default function Join() {
                           <Route path="/enjoy" element={<Enjoy />} />
                       </Routes>
                   </div>
-            </RoomProvider>
         </div>
     );
 }

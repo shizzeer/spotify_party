@@ -1,6 +1,7 @@
 import './Enjoy.css';
 import { confetti } from "tsparticles-confetti";
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { RoomContext } from '../../context/RoomContext';
 
 // go Buckeyes!
 const colors = ["#1ed760", "#ffffff"];
@@ -31,14 +32,17 @@ const run = () => {
 };
 
 export default function Enjoy() {
+    const { isHost } = useContext(RoomContext);
     useEffect(() => {
         run();
+        console.log(isHost);
     }, []);
 
     return (
         <>
             <div className="enjoy-container">
                 <h1>Enjoy the music!</h1>
+                {isHost && <button>CREATE PLAYLIST</button>}
             </div>
         </>
     );

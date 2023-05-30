@@ -3,16 +3,10 @@ import "./MustHave.css";
 import SearchBar from "./SearchBar/SearchBar";
 import { SearchResultsList } from "./SearchResultsList/SearchResultsList";
 import SearchResultHeader from "./SearchResultsList/SearchResultHeader/SearchResultHeader";
-/*import {useNavigate} from "react-router-dom";*/
 
 export default function MustHave() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-/*  const navigate = useNavigate();*/
-
-/*  const handleSubmitMustHave = () => {
-      navigate("/join/enjoy");
-  }*/
 
   return (
       <div className="must-have-container">
