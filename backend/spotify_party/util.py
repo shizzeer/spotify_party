@@ -3,6 +3,8 @@ from datetime import timedelta
 from .credentials import CLIENT_ID, CLIENT_SECRET
 from requests import post, put, get, RequestException
 from .models import User, Playlist, Track, MusicGenre, PlaylistTrack, Artist, ArtistTrack, AlbumTrack, Album
+from .playlists_merging import *
+import json
 
 BASE_URL = "https://api.spotify.com/v1/"
 
@@ -438,7 +440,45 @@ def get_user_track_ids(user_id):
     artist_tracks = ArtistTrack.objects.filter(id_artist__id_user=user_id).values_list("id_track__id_track", flat=True)
     # Concatenate all track querysets and remove duplicates
     track_ids = set(list(playlist_tracks) + list(album_tracks) + list(artist_tracks))
-    return list(track_ids)
+    return track_ids
+
+def get_room_participants(room_code):
+    room_participants = User.objects.filter(roomparticipant__room__code=room_code)
+
+    return room_participants
+
+def get_room_participants_tracks(room_participants):
+    room_participants_tracks_ids = []
+    for user in room_participants:
+        user_tracks_ids = get_user_track_ids(user.id_user)
+        room_participants_tracks_ids.append(user_tracks_ids)
+
+    return room_participants_tracks_ids
+
+def get_common_tracks_for_room(room_code):
+    # Get all room participants
+    room_participants = get_room_participants(room_code)
+
+    # Get all tracks from each room_participant
+    room_participants_tracks = get_room_participants_tracks(room_participants)
+
+    # Find common tracks for users within one room
+    common_tracks = find_common_tracks(room_participants_tracks)
+
+    return common_tracks
+
+def create_playlist_for_room(room_code, user, track_ids):
+    playlist_name = room_code + '_playlist'
+
+    # Create new playlist
+    playlist = Playlist.objects.create(name=playlist_name, id_user=user)
+
+    # Assign tracks to new playlist
+    for track_id in track_ids:
+        track = Track.objects.get(id_track=track_id)
+        PlaylistTrack.objects.create(id_track=track, id_playlist=playlist)
+
+    return playlist_name
 
 # def get_favorite_genres(session_id):
 #     """

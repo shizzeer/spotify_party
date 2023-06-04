@@ -17,5 +17,6 @@ urlpatterns = [
     path('api/me/must-have', views.SearchTracks.as_view()),
     #path('api/me/tracks', views.Tracks.as_view()),
     path('api/room', views.RoomView.as_view()),
+    path('api/merge_playlists', views.MergePlaylists.as_view()),
     path('api/me/test', views.Test.as_view()), #FOR TESTING
 ]
