@@ -1,0 +1,26 @@
+.next-button {
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: #171717;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    color: rgb(255, 255, 255, 1);
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    padding: 1vh 2vw;
+    transition: 0.4s ease all;
+    font-size: 3vh;
+    margin: 2%;
+}
+
+.next-button:hover {
+    background-color: #1ED760;
+}
+
+.next-button .next-button__text {
+    margin-right: 1vw;
+}
+
+.next-button .next-button__arrow {
+    font-size: 3vh;
+}

@@ -1,14 +1,14 @@
-.artists-container {
+.albums-container {
     width: 100%;
     height: 100%;
 }
 
-.artists-list-container {
+.albums-container .albums-list-container {
     width: 75%;
     margin: auto;
 }
 
-.artists-container h1 {
+.albums-container h1 {
     padding: 5svh;
     color: #FFFFFF;
     font-family: 'Roboto', sans-serif;

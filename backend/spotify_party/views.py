@@ -3,7 +3,7 @@ import string
 from django.shortcuts import redirect
 
 from .models import Room, RoomParticipant
-from .credentials import CLIENT_SECRET, CLIENT_ID, USER_SCOPES, REDIRECT_CALLBACK_JOIN_URI
+from .credentials import CLIENT_SECRET, CLIENT_ID, USER_SCOPES, HOST_SCOPES, REDIRECT_CALLBACK_JOIN_URI, REDIRECT_CALLBACK_HOST_URI
 from rest_framework.views import APIView
 from requests import Request, post
 from rest_framework import status
@@ -42,6 +42,75 @@ class AuthUserURL(APIView):
         return Response({'url': url}, status=status.HTTP_200_OK)
 
 
+class AuthHostURL(APIView):
+    """ Handles the authorization process for users-hosts with Spotify API. """
+
+    def get(self, request):
+        """
+        Handles GET requests and returns a URL for user authorization.
+
+        :param request: An HttpRequest object representing the request.
+        :return: A JsonResponse containing the authorization URL and an HTTP 200 status code.
+        """
+
+        # Join hosts scopes (permissions) into a single space-separated string
+        scopes = ' '.join(HOST_SCOPES)
+
+        # Construct the authorization URL
+        url = Request(
+            method='GET',
+            url='https://accounts.spotify.com/authorize',
+            params={
+                'scope': scopes,
+                'response_type': 'code',
+                'redirect_uri': REDIRECT_CALLBACK_HOST_URI,
+                'client_id': CLIENT_ID,
+            }
+        ).prepare().url
+
+        return Response({'url': url}, status=status.HTTP_200_OK)
+
+
+def spotify_host_callback(request):
+    """
+    Handles the callback from the Spotify API after user-host authorization.
+    It retrieves the authorization code, exchanges it for an access token, and stores the
+    tokens in the database for the current session.
+
+    :param request: An HttpRequest object representing the request.
+    :return: A redirect to the specified URL.
+    """
+
+    REDIRECT_URL = 'http://127.0.0.1:3000/host'
+
+    # Get the authorization code from the request's GET parameters
+    code = request.GET.get('code')
+
+    # Send a POST request to exchange the authorization code for an access token
+    spotify_response = post('https://accounts.spotify.com/api/token', data={
+        'grant_type': 'authorization_code',
+        'code': code,
+        'redirect_uri': REDIRECT_CALLBACK_HOST_URI,
+        'client_id': CLIENT_ID,
+        'client_secret': CLIENT_SECRET
+    }).json()
+
+    access_token = spotify_response.get('access_token')
+    token_type = spotify_response.get('token_type')
+    refresh_token = spotify_response.get('refresh_token')
+    expires_in = spotify_response.get('expires_in')
+
+    if not request.session.exists(request.session.session_key):
+        request.session.create()
+
+    set_tokens(request.session.session_key, access_token, token_type, expires_in, refresh_token)
+
+    #TODO: NOT SAFE FOR PRODUCTION
+    response = redirect(REDIRECT_URL)
+    response.set_cookie('sessionid', request.session.session_key, path='/host')
+    return response
+
+
 def spotify_user_callback(request):
     """
     Handles the callback from the Spotify API after user authorization.
@@ -52,13 +121,13 @@ def spotify_user_callback(request):
     :return: A redirect to the specified URL.
     """
 
-    REDIRECT_URL = 'http://localhost:3000/join'
+    REDIRECT_URL = 'http://127.0.0.1:3000/join'
 
     # Get the authorization code from the request's GET parameters
     code = request.GET.get('code')
 
     # Send a POST request to exchange the authorization code for an access token
-    response = post('https://accounts.spotify.com/api/token', data={
+    spotify_response = post('https://accounts.spotify.com/api/token', data={
         'grant_type': 'authorization_code',
         'code': code,
         'redirect_uri': REDIRECT_CALLBACK_JOIN_URI,
@@ -66,18 +135,20 @@ def spotify_user_callback(request):
         'client_secret': CLIENT_SECRET
     }).json()
 
-    access_token = response.get('access_token')
-    token_type = response.get('token_type')
-    refresh_token = response.get('refresh_token')
-    expires_in = response.get('expires_in')
+    access_token = spotify_response.get('access_token')
+    token_type = spotify_response.get('token_type')
+    refresh_token = spotify_response.get('refresh_token')
+    expires_in = spotify_response.get('expires_in')
 
     if not request.session.exists(request.session.session_key):
         request.session.create()
 
     set_tokens(request.session.session_key, access_token, token_type, expires_in, refresh_token)
 
-    # TODO: CHANGE URL (FOR TESTING PURPOSES ONLY)
-    return redirect('http://127.0.0.1:8000/api/auth/check')
+    #TODO: NOT SAFE FOR PRODUCTION
+    response = redirect(REDIRECT_URL)
+    response.set_cookie('sessionid', request.session.session_key, path='/join')
+    return response
 
 
 class IsAuthenticated(APIView):
@@ -189,7 +260,7 @@ class RoomView(APIView):
     """
 
     def create(self, request):
-        user_id = request.data.get('user_id')  # Pobierz id_user z ciała żądania
+        user_id = self.request.session.session_key
         user = User.objects.get(id_user=user_id)
         # Generate unique code for a room
         code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
@@ -204,7 +275,7 @@ class RoomView(APIView):
 
     def join(self, request):
         room_code = request.data.get('room_code')
-        user_id = request.data.get('user_id')
+        user_id = self.request.session.session_key
         user = User.objects.get(id_user=user_id)
         try:
             room = Room.objects.get(code=room_code)
@@ -225,6 +296,25 @@ class RoomView(APIView):
             return self.join(request)
         else:
             return Response({'error': 'Invalid action'}, status=400)
+
+
+class SearchTracks(APIView):
+    """
+    A class-based view to search tracks in Spotify.
+    """
+
+    def get(self, request):
+        session_id = self.request.session.session_key
+        query = request.GET.get('q')
+
+        if query is None:
+            return Response({'Error': 'Missing query parameter'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Get the tracks from Spotify
+        tracks = get_tracks(session_id, query)
+
+        # Return the retrieved tracks with a 200 OK status
+        return Response(tracks, status=status.HTTP_200_OK)
     
 
 class Test(APIView):
@@ -236,6 +326,9 @@ class Test(APIView):
 
         # Return the retrieved tracks with a 200 OK status
         return Response(user_tracks, status=status.HTTP_200_OK)
+
+
+
 
 #
 # class Genres(APIView):

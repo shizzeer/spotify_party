@@ -1,36 +1,34 @@
-import './PlayListsList.css';
-import React, { useState, useEffect } from 'react';
-import defaultCover from '../../../assets/cover1.jfif';
-import PlaylistCard from "../PlaylistCard/PlaylistCard";
+import './AlbumsList.css';
+import React, {useEffect, useState} from 'react';
+import AlbumCard from "../AlbumCard/AlbumCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import NextArrow from "../../Arrows/NextArrow/NextArrow";
 import PrevArrow from "../../Arrows/PrevArrow/PrevArrow";
 
-
-export default function PlaylistsList({playlists, setSelectedPlaylists}) {
-    const [checkedPlaylists, setCheckedPlaylists] = useState([]);
+export default function AlbumsList({albums, setSelectedAlbums}) {
+    const [checkedAlbums, setCheckedAlbums] = useState([]);
 
     const handleCheckedChange = (index, isChecked) => {
-        setCheckedPlaylists(prevState => {
+        setCheckedAlbums(prevState => {
             const newState = [...prevState];
             if (isChecked) {
-                newState.push(playlists[index]);
+                newState.push(albums[index]);
             } else {
-                newState.splice(newState.indexOf(playlists[index]), 1);
+                newState.splice(newState.indexOf(albums[index]), 1);
             }
             return newState;
         });
     };
 
     useEffect(() => {
-        setSelectedPlaylists(checkedPlaylists);
-    }, [checkedPlaylists, setSelectedPlaylists]);
+        setSelectedAlbums(checkedAlbums);
+    }, [checkedAlbums, setSelectedAlbums]);
 
     const settings = {
         dots: false,
-        infinite: playlists.length >= 5,
+        infinite: albums.length >= 5,
         speed: 500,
         slidesToShow: 5,
         slidesToScroll: 5,
@@ -41,15 +39,15 @@ export default function PlaylistsList({playlists, setSelectedPlaylists}) {
 
     return (
         <>
-            {playlists ? (
+            {albums ? (
                 <Slider {...settings}>
-                    {playlists.map((playlist, index) => {
+                    {albums.map((album, index) => {
                         return (
-                            <PlaylistCard
-                                key={playlist.id}
-                                playlistName={playlist.name}
-                                description={playlist.description}
-                                img={playlist.image || defaultCover}
+                            <AlbumCard
+                                key={album.id}
+                                albumName={album.name}
+                                artistName={album.artist}
+                                img={album.image}
                                 onCheckedChange={(isChecked) => handleCheckedChange(index, isChecked)}
                             />
                         );

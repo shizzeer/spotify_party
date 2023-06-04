@@ -6,6 +6,7 @@ import MustHave from "../components/MustHave/MustHave";
 import Artists from "../components/Artists/Artists";
 import Playlists from "../components/Playlists/Playlists";
 import Enjoy from "../components/Enjoy/Enjoy";
+import Albums from "../components/Albums/Albums";
 
 const Root = [
     {
@@ -17,7 +18,7 @@ const Root = [
         element: <Host />,
     },
     {
-        path: "join",
+        path: "join/*",
         element: <Join />,
         children: [
             {
@@ -38,6 +39,11 @@ const Root = [
             {
                 path: "artists",
                 element: <Artists />
+                // loader: must_Loader https://reactrouter.com/en/main/route/loader
+            },
+            {
+                path: "albums",
+                element: <Albums />
                 // loader: must_Loader https://reactrouter.com/en/main/route/loader
             },
             {

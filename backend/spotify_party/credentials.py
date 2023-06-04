@@ -25,14 +25,18 @@ HOST_SCOPES = [
     'ugc-image-upload',               # Upload user-generated playlist cover images
     'playlist-modify-public',         # Modify and read public playlists
     'playlist-modify-private',        # Modify and read private playlists
+    'playlist-read-private',          # Read access to user's private playlists
+    'playlist-read-collaborative',    # Read access to user's collaborative playlists
     'user-library-modify',            # Modify and read user's saved tracks and albums
+    'user-library-read',               # Read access to user's saved tracks and albums
     'user-follow-modify',             # Modify and read user's followed artists
+    'user-follow-read',               # Read access to the list of artists followed by the user
     'user-read-private',              # Read user's private account information
     'user-read-email',                # Read user's email address
     'user-read-playback-state',       # Read user's current playback state
     'user-read-currently-playing',    # Read user's currently playing track
     'user-modify-playback-state',     # Control user's playback state
     'user-read-recently-played',      # Read user's recently played tracks
-    'user-top-read',                  # Read user's top artists and tracks
+    'user-top-read',                  # Read access to user's top artists and tracks
     'user-read-playback-position',    # Read user's playback position in the current episode of a podcast
 ]
