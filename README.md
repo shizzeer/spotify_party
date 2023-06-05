@@ -1,7 +1,19 @@
 ![backend workflow](https://github.com/shizzeer/spotify_party/actions/workflows/backend-ci.yml/badge.svg)
 ![frontend workflow](https://github.com/shizzeer/spotify_party/actions/workflows/frontend-ci.yml/badge.svg)
 
-# SpotifyParty
+<p align="center">
+  <a href="" rel="noopener">
+ <img src="./frontend/src/assets/logo.svg" alt="Project logo"></a>
+</p>
+
+<div align="center">
+
+  [![Status](https://img.shields.io/badge/status-active-success.svg)]() 
+  [![GitHub Issues](https://img.shields.io/github/issues/shizzeer/spotify_party)](https://github.comshizzeer/spotify_party/issues)
+  [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.comshizzeer/spotify_party/pulls)
+  [![File count](https://img.shields.io/github/directory-file-count/shizzeer/spotify_party)]() 
+
+</div>
 
 ## Opis projektu
 
