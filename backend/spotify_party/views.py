@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action 
 
 from .util import * 
+from .playlists_merging import *
 
 
 class AuthUserURL(APIView):
@@ -315,6 +316,29 @@ class SearchTracks(APIView):
 
         # Return the retrieved tracks with a 200 OK status
         return Response(tracks, status=status.HTTP_200_OK)
+    
+class MergePlaylists(APIView):
+    """
+    A class-based view to merge playlists of users from a common room.
+    """
+
+    def post(self, request):
+        session_id = self.request.session.session_key
+
+        # Get the selected albums from the request data
+        room_code = request.data.get("room_code")
+
+        # Get common tracks
+        common_tracks = get_common_tracks_for_room(room_code)
+
+        # Retrieve user from database
+        user = get_tokens(session_id)
+
+        # Create playlist on host account
+        playlist_name = create_playlist_for_room(room_code, user, common_tracks)
+
+        return Response("Your playlist is created! Name: " + playlist_name, status=status.HTTP_200_OK)
+    
     
 
 class Test(APIView):
