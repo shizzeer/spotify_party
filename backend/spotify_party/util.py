@@ -468,30 +468,20 @@ def get_common_tracks_for_room(room_code):
     return common_tracks
 
 def create_playlist_for_room(room_code, user, track_ids):
-    playlist_name = room_code + '_playlist'
+    playlist_name = room_code + '_SPOTIFY_PARTY'
 
-    # Create new playlist
-    playlist = Playlist.objects.create(name=playlist_name, id_user=user)
+    # Create playlist in Spotify
+    response = execute_spotify_api_request(user.id_user, f"users/{user.id_spotify}/playlists", method="POST", data={
+        "name": playlist_name,
+        "description" : "Playlist created by SpotifyParty",
+        "public": False,
+    })
 
-    # Assign tracks to new playlist
-    for track_id in track_ids:
-        track = Track.objects.get(id_track=track_id)
-        PlaylistTrack.objects.create(id_track=track, id_playlist=playlist)
+    # Add tracks to playlist in Spotify
+    playlist_id = response["id"]
+
+    execute_spotify_api_request(user.id_user, f"playlists/{playlist_id}/tracks", method="POST", data={
+        "uris": [f"spotify:track:{track_id}" for track_id in track_ids]
+    })
 
     return playlist_name
-
-# def get_favorite_genres(session_id):
-#     """
-#     Retrieves the user's favorite genres based on available genre seeds from the Spotify API.
-#
-#     :param session_id: The user's session ID.
-#     :return: A list of the user's favorite genres or an error dictionary.
-#     """
-#     genre_seeds_response = execute_spotify_api_request(session_id, "recommendations/available-genre-seeds")
-#
-#     if 'Error' in genre_seeds_response:
-#         return genre_seeds_response
-#
-#     return genre_seeds_response['genres']
-#
-

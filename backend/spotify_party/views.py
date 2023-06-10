@@ -328,116 +328,15 @@ class MergePlaylists(APIView):
         # Get the selected albums from the request data
         room_code = request.data.get("room_code")
 
-        # Get common tracks
         common_tracks = get_common_tracks_for_room(room_code)
 
-        # Retrieve user from database
         user = get_tokens(session_id)
-
-        # Create playlist on host account
         playlist_name = create_playlist_for_room(room_code, user, common_tracks)
+        print(playlist_name)
 
-        return Response("Your playlist is created! Name: " + playlist_name, status=status.HTTP_200_OK)
-    
-    
-
-class Test(APIView):
-    def get(self, request):
-        session_id = self.request.session.session_key
-
-        # Get all tracks associated with the current user
-        user_tracks = get_user_track_ids(session_id)
-
-        # Return the retrieved tracks with a 200 OK status
-        return Response(user_tracks, status=status.HTTP_200_OK)
+        return Response("Your playlist is created! Name: " + playlist_name ,status=status.HTTP_200_OK)
 
 
 
 
-#
-# class Genres(APIView):
-#     """
-#     A class-based view to retrieve the genres available in the Spotify catalog.
-#     """
-#
-#     def get(self, request):
-#         session_id = self.request.session.session_key
-#         genres = get_favorite_genres(session_id)
-#         return Response(genres, status=status.HTTP_200_OK)
-#
-#     def post(self, request):
-#         # Get the session ID for the current user
-#         session_id = self.request.session.session_key
-#
-#         # Get the Spotify token associated with the session ID
-#         spotify_token = SpotifyToken.objects.get(user=session_id)
-#
-#         # Parse the list of favorite genres from the request data
-#         favorite_genres = request.data.get('favorite_genres', [])
-#
-#         # Add each favorite genre to the database
-#         for genre_name in favorite_genres:
-#             # Get or create the genre object based on the name
-#             genre, _ = Genre.objects.get_or_create(name=genre_name)
-#
-#             # Create a FavoriteGenre object to associate the genre with the Spotify token
-#             favorite_genre = FavouriteGenre.objects.create(
-#                 spotify_token=spotify_token,
-#                 genre=genre
-#             )
-#
-#         # Return a success response
-#         return Response({'message': 'Favorite genres added successfully.'}, status=status.HTTP_200_OK)
-#
-#
-# class Albums(APIView):
-#     """
-#     A class-based view to retrieve the favorite albums of the current user.
-#     """
-#
-#     def get(self, request):
-#         session_id = self.request.session.session_key
-#         favorite_albums = get_favorite_albums(session_id)
-#         return Response(favorite_albums, status=status.HTTP_200_OK)
-#
-#
-# class Compute(APIView):
-#     def get(self, request):
-#         session_id = self.request.session.session_key
-#         test = retrieve_tracks_from_playlists_in_db(session_id)
-#         return Response(test, status=status.HTTP_200_OK)
-#
-#
-# class Tracks(APIView):
-#     """
-#     A class-based view to retrieve the favorite tracks of the current user.
-#     """
-#
-#     def get(self, request):
-#         session_id = self.request.session.session_key
-#         favorite_tracks = get_favorite_tracks(session_id)
-#         return Response(favorite_tracks, status=status.HTTP_200_OK)
-#
-#     def post(self, request):
-#         # Get the session ID for the current user
-#         session_id = self.request.session.session_key
-#
-#         # Get the Spotify token associated with the session ID
-#         spotify_token = SpotifyToken.objects.get(user=session_id)
-#
-#         # Parse the list of favorite tracks from the request data
-#         favorite_tracks = request.data.get('favorite_tracks', [])
-#
-#         # Add each favorite track to the database
-#         for track_id in favorite_tracks:
-#             # Get or create the track object based on the ID
-#             track, _ = Track.objects.get_or_create(id=track_id)
-#
-#             # Create a FavouriteTrack object to associate the track with the Spotify token
-#             favorite_track = FavouriteTrack.objects.create(
-#                 spotify_token=spotify_token,
-#                 track=track
-#             )
-#
-#         # Return a success response
-#         return Response({'message': 'Favorite tracks added successfully.'}, status=status.HTTP_200_OK)
+
